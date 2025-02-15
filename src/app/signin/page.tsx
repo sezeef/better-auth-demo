@@ -31,10 +31,39 @@ export default function SignInPage() {
                 },
                 onError: (ctx) => {
                     setIsPending(false);
-                    setError(ctx.error.message || "An unexpected error occurred");
-                    console.error(">SignInPage>signInHandler>fetch.onError:\n", ctx.error);
+                    setError(
+                        ctx.error.message || "An unexpected error occurred",
+                    );
+                    console.error("[signInHandler] Error:\n", ctx.error);
                 },
-            }
+            },
+        });
+    }
+
+    async function githubSignonHandler(
+        event: React.MouseEvent<HTMLButtonElement>,
+    ) {
+        event.preventDefault();
+        await authClient.signIn.social({
+            provider: "github",
+            callbackURL: "/dashboard",
+            fetchOptions: {
+                onRequest: () => {
+                    setIsPending(true);
+                    setError("");
+                },
+                onSuccess: () => {
+                    setIsPending(false);
+                    setError("");
+                },
+                onError: (ctx) => {
+                    setIsPending(false);
+                    setError(
+                        ctx.error.message || "An unexpected error occurred",
+                    );
+                    console.error("[githubSignOnHandler] Error:\n", ctx.error);
+                },
+            },
         });
     }
 
@@ -65,11 +94,11 @@ export default function SignInPage() {
                     required
                 />
             </fieldset>
-            {error &&
+            {error && (
                 <span id="form-error" role="alert" className="text-red-500">
                     {error}
                 </span>
-            }
+            )}
             <button
                 type="submit"
                 className="w-40 border disabled:text-neutral-500 disabled:cursor-progress"
@@ -77,7 +106,20 @@ export default function SignInPage() {
             >
                 {isPending ? "Signing In..." : "Sign In"}
             </button>
-            <Link href="/signup" className="underline">Don&apos;t have an account?</Link>
+            <ul>
+                <li>
+                    <button
+                        className="underline hover:cursor-pointer disabled:text-neutral-500 disabled:cursor-progress"
+                        disabled={isPending}
+                        onClick={githubSignonHandler}
+                    >
+                        [github]
+                    </button>
+                </li>
+            </ul>
+            <Link href="/signup" className="underline">
+                Don&apos;t have an account?
+            </Link>
         </form>
     );
 }
