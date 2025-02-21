@@ -28,8 +28,7 @@ export function envValidator() {
     console.error(
       ` ${bold}${red}✗${reset} Environment variables validation failed:`,
     );
-    console.error(errorMessageBuilder(result.error.errors));
-    process.exit(1);
+    throw new Error("[INSTRUMENTATION]\n" + errorMessageBuilder(result.error.errors));
   }
 
   console.info(
