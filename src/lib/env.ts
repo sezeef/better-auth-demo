@@ -1,16 +1,16 @@
-import z, { type ZodIssue } from "zod";
+import { z } from "zod";
 
 export const envSchema = z.object({
-  NEXT_PUBLIC_BASE_URL: z.string().url(),
-  BETTER_AUTH_URL: z.string().url(),
+  NEXT_PUBLIC_BASE_URL: z.url(),
+  BETTER_AUTH_URL: z.url(),
   BETTER_AUTH_SECRET: z.string(),
-  TURSO_DATABASE_URL: z.string().url(),
+  TURSO_DATABASE_URL: z.url(),
   TURSO_AUTH_TOKEN: z.string(),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
 });
 
-export function errorMessageBuilder(errors: ZodIssue[]): string {
+export function errorMessageBuilder(errors: z.core.$ZodIssue[]): string {
   return errors.reduce((acc, error, idx) => {
     return acc + `   [${idx + 1}] ${error.path.join(".")}: ${error.message}\n`;
   }, "");
@@ -28,7 +28,9 @@ export function envValidator() {
     console.error(
       ` ${bold}${red}✗${reset} Environment variables validation failed:`,
     );
-    throw new Error("[INSTRUMENTATION]\n" + errorMessageBuilder(result.error.errors));
+    throw new Error(
+      "[INSTRUMENTATION]\n" + errorMessageBuilder(result.error.issues),
+    );
   }
 
   console.info(
