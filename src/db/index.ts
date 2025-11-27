@@ -1,10 +1,18 @@
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
+import * as schema from "@/db/schema";
+import { getTestDb } from "@/db/test";
 
-export const client = createClient({
-  url: process.env.TURSO_DATABASE_URL,
-  authToken: process.env.TURSO_AUTH_TOKEN,
-});
+export function getDb() {
+  if (process.env.NODE_ENV === "test") {
+    return getTestDb();
+  }
 
-export const db = drizzle({ client });
+  const client = createClient({
+    url: process.env.TURSO_DATABASE_URL!,
+    authToken: process.env.TURSO_AUTH_TOKEN!,
+  });
+
+  return drizzle(client, { schema });
+}

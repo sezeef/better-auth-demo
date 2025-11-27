@@ -1,12 +1,12 @@
 import { betterAuth } from "better-auth";
 import { anonymous } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import * as schema from "@/db/schema";
 
 // has to be exported with the variable name `auth` OR as a default export
 export const auth = betterAuth({
-  database: drizzleAdapter(db, {
+  database: drizzleAdapter(getDb(), {
     provider: "sqlite",
     schema,
   }),
@@ -20,7 +20,5 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     },
   },
-  plugins: [
-    anonymous(),
-  ],
+  plugins: [anonymous()],
 });

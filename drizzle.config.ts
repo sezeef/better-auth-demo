@@ -7,7 +7,7 @@ dotenv.config({
 
 export default {
   dialect: "turso",
-  schema: "./src/db/schema.ts",
+  schema: "./src/db/schema",
   out: "./migrations",
   strict: true,
   dbCredentials: {
