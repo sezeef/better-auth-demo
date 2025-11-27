@@ -12,7 +12,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:drop-migrations": "drizzle-kit drop",
-    "db:host": "turso dev --db-file local.db"
+    "db:host": "turso dev --db-file local.db",
+    "test:e2e": "playwright test",
+    "test:e2e-ui": "playwright test --ui"
   },
   "dependencies": {
     "@libsql/client": "^0.15.10",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^22.17.0",
     "@types/react": "^19.1.9",
