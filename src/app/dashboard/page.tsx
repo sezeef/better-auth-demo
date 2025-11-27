@@ -17,6 +17,7 @@ export default async function DashboardPage() {
   return (
     <main>
       <section>
+        <h1>
         Welcome to Dashboard,{" "}
         <span className="bold">{authState?.user.name}</span>
         {authState?.user?.image && (
@@ -28,6 +29,7 @@ export default async function DashboardPage() {
             height={256}
           />
         )}
+        </h1>
       </section>
     </main>
   );

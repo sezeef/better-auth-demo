@@ -53,6 +53,31 @@ export default function SignUpPage() {
     });
   }
 
+  async function githubSignonHandler(
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) {
+    event.preventDefault();
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: "/dashboard",
+      fetchOptions: {
+        onRequest: () => {
+          setIsPending(true);
+          setError("");
+        },
+        onSuccess: () => {
+          setIsPending(false);
+          setError("");
+        },
+        onError: (ctx) => {
+          setIsPending(false);
+          setError(ctx.error.message || "An unexpected error occurred");
+          console.error("[githubSignOnHandler] Error:\n", ctx.error);
+        },
+      },
+    });
+  }
+
   return (
     <form
       onSubmit={signUpHandler}
@@ -115,6 +140,17 @@ export default function SignUpPage() {
       >
         {isPending ? "Signing Up..." : "Sign Up"}
       </button>
+      <ul>
+        <li>
+          <button
+            className="underline hover:cursor-pointer disabled:text-neutral-500 disabled:cursor-progress"
+            disabled={isPending}
+            onClick={githubSignonHandler}
+          >
+            [github]
+          </button>
+        </li>
+      </ul>
       <Link href="/signin" className="underline">
         Already have an account?
       </Link>

@@ -15,7 +15,9 @@ export default async function Home() {
   return (
     <main>
       <section>
-        Welcome Home, {authState?.user ? authState.user.name : "Stranger"}
+        <h1>
+          Welcome Home, {authState?.user ? authState.user.name : "Stranger"}
+        </h1>
       </section>
     </main>
   );
