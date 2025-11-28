@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
@@ -21,7 +22,7 @@ export default async function DashboardPage() {
         Welcome to Dashboard,{" "}
         <span className="bold">{authState?.user.name}</span>
         {authState?.user?.image && (
-          <img
+          <Image
             src={authState.user.image}
             alt="User image"
             className="rounded-lg"
