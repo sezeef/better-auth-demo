@@ -3,6 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 
+// Needed for build-time because `next build`
+// Tries to pre-render pages and fails when it
+// hits dynamic function...
+// TODO: Switch to static pages w/ client-side
+// auth checks when possible
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
