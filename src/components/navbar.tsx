@@ -14,10 +14,13 @@ export async function Navbar() {
     console.error("[NAVBAR] Error:\n", error);
   }
 
+  console.log(authState);
+
   return (
     <nav className="w-fit flex gap-5 mb-10 border p-2 text-lg font-medium underline">
       <Link href="/">Home</Link>
       <Link href="/dashboard">Dashboard</Link>
+      <Link href="/demo">Demo Page</Link>
       <Link href="/signin">Signin</Link>
       <Link href="/signup">Signup</Link>
       {authState?.user && <SignoutButton />}
